@@ -11,15 +11,21 @@ jobs:
   include:
     # Check PEP8 and syntax error in python files
     - stage: PEP8 and syntax error
-      script:
-        - flake8 .
-    - stage: Kodi simulator
-      script:
-        # Apply different exploration config
-      - ./main.py -c configs/0_open_root_and_exit.json
-      - ./main.py -c configs/1_open_replay_menu_and_exit.json
-      - ./main.py -c configs/2_open_each_replay_country_root_menu_and_exit.json
-      - ./main.py -c configs/3_open_each_french_replay_channel_menu_and_exit.json
+      script: flake8 .
+    - stage: Test
+      script: git clone https://github.com/Catch-up-TV-and-More/catchuptvandmore-test
+    # - stage: Kodi simulator (root menu)
+    #   script:
+    #       # Git clone catchuptvandmore-test framework
+    #     - cd ..
+    #     - git clone https://github.com/Catch-up-TV-and-More/catchuptvandmore-test
+    #     - cd catchuptvandmore-test
+    #       # Apply different exploration config
+    #     - ./main.py -c configs/0_open_root_and_exit.json
+    #     - ./main.py -c configs/1_open_replay_menu_and_exit.json
+    #     - ./main.py -c configs/2_open_each_replay_country_root_menu_and_exit.json
+    #     - ./main.py -c configs/3_open_each_french_replay_channel_menu_and_exit.json
+
 
 notifications:
   email:
