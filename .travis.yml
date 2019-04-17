@@ -5,15 +5,18 @@ python:
 
 install:
   # Install dependencies
-  - "pip install flake8 urlquick polib mock htmlement colorama requests"
+  - pip install flake8 urlquick polib mock htmlement colorama requests
+  - git clone https://github.com/Catch-up-TV-and-More/catchuptvandmore-test ../simul
 
 jobs:
   include:
     # Check PEP8 and syntax error in python files
     - stage: PEP8 and syntax error
       script: flake8 .
-    - stage: Test
-      script: git clone https://github.com/Catch-up-TV-and-More/catchuptvandmore-test
+    - stage: Simulation root menu
+      script: cd ../simul && ./main.py -c configs/0_open_root_and_exit.json
+    - stage: Simulation replay menu
+      script: cd ../simul && ./main.py -c configs/1_open_replay_menu_and_exit.json
     # - stage: Kodi simulator (root menu)
     #   script:
     #       # Git clone catchuptvandmore-test framework
