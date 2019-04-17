@@ -25,7 +25,7 @@ script:
   - if [ $JOB == 'simul_replay_french_depth' ]; then cd ../simul && ./main.py -c configs/4_open_each_french_replay_channel_in_depth.json 2>&1|tee ${JOB}.log; fi
 
 #after_failure:
-after_succes:
+after_success:
   - curl -L https://github.com/Catch-up-TV-and-More/catchuptvandmore-test/raw/master/utils/haste > haste_${JOB} && chmod 755 haste_${JOB}
   - echo "* Complete log file can be found here:"
   - ./haste_${JOB} ${JOB}.log
