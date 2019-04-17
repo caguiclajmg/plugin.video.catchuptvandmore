@@ -8,15 +8,25 @@ install:
   - pip install flake8 urlquick polib mock htmlement colorama requests
   - git clone https://github.com/Catch-up-TV-and-More/catchuptvandmore-test ../simul
 
-jobs:
-  include:
-    # Check PEP8 and syntax error in python files
-    - stage: PEP8 and syntax error
-      script: flake8 .
-    - stage: Simulation root menu
-      script: cd ../simul && ./main.py -c configs/0_open_root_and_exit.json
-    - stage: Simulation replay menu
-      script: cd ../simul && ./main.py -c configs/1_open_replay_menu_and_exit.json
+env:
+  - JOB=flake
+  - JOB=simul_root
+  - JOB=simul_replay
+
+script:
+  - if [ $JOB == 'flake' ]; then flake8 .; fi
+  - if [ $JOB == 'simul_root' ]; then cd ../simul && ./main.py -c configs/0_open_root_and_exit.json; fi
+  - if [ $JOB == 'simul_replay' ]; then cd ../simul && ./main.py -c configs/1_open_replay_menu_and_exit.json; fi
+
+# jobs:
+#   include:
+#     # Check PEP8 and syntax error in python files
+#     - stage: PEP8 and syntax error
+#       script: flake8 .
+#     - stage: Simulation root menu
+#       script: cd ../simul && ./main.py -c configs/0_open_root_and_exit.json
+#     - stage: Simulation replay menu
+#       script: cd ../simul && ./main.py -c configs/1_open_replay_menu_and_exit.json
     # - stage: Kodi simulator (root menu)
     #   script:
     #       # Git clone catchuptvandmore-test framework
