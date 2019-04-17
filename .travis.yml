@@ -12,32 +12,15 @@ env:
   - JOB=flake
   - JOB=simul_root
   - JOB=simul_replay
+  - JOB=simul_replay_country
+  - JOB=simul_replay_french
 
 script:
   - if [ $JOB == 'flake' ]; then flake8 .; fi
   - if [ $JOB == 'simul_root' ]; then cd ../simul && ./main.py -c configs/0_open_root_and_exit.json; fi
   - if [ $JOB == 'simul_replay' ]; then cd ../simul && ./main.py -c configs/1_open_replay_menu_and_exit.json; fi
-
-# jobs:
-#   include:
-#     # Check PEP8 and syntax error in python files
-#     - stage: PEP8 and syntax error
-#       script: flake8 .
-#     - stage: Simulation root menu
-#       script: cd ../simul && ./main.py -c configs/0_open_root_and_exit.json
-#     - stage: Simulation replay menu
-#       script: cd ../simul && ./main.py -c configs/1_open_replay_menu_and_exit.json
-    # - stage: Kodi simulator (root menu)
-    #   script:
-    #       # Git clone catchuptvandmore-test framework
-    #     - cd ..
-    #     - git clone https://github.com/Catch-up-TV-and-More/catchuptvandmore-test
-    #     - cd catchuptvandmore-test
-    #       # Apply different exploration config
-    #     - ./main.py -c configs/0_open_root_and_exit.json
-    #     - ./main.py -c configs/1_open_replay_menu_and_exit.json
-    #     - ./main.py -c configs/2_open_each_replay_country_root_menu_and_exit.json
-    #     - ./main.py -c configs/3_open_each_french_replay_channel_menu_and_exit.json
+  - if [ $JOB == 'simul_replay_country' ]; then cd ../simul && ./main.py -c configs/2_open_each_replay_country_root_menu_and_exit.json; fi
+  - if [ $JOB == 'simul_replay_french' ]; then cd ../simul && ./main.py -c configs/3_open_each_french_replay_channel_menu_and_exit.json; fi
 
 
 notifications:
