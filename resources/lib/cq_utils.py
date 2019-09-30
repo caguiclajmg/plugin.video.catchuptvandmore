@@ -24,6 +24,12 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 import importlib
 import xbmcgui
 import xbmc
@@ -33,7 +39,7 @@ try:
     import urllib.parse as urlparse
 except ImportError:
     # noinspection PyUnresolvedReferences
-    import urlparse
+    import urllib.parse
 
 from codequick import Script
 from resources.lib.labels import LABELS
@@ -55,7 +61,7 @@ def build_kodi_url(route_path, raw_params):
             pickled.decode("ascii") if PY3 else pickled)
 
     # Build kodi url
-    return urlparse.urlunsplit(
+    return urllib.parse.urlunsplit(
         ("plugin", "plugin.video.catchuptvandmore", route_path, query, ""))
 
 

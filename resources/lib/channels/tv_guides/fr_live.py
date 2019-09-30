@@ -24,9 +24,17 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
 # Source: https://github.com/melmorabity/tv_grab_fr_telerama
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
+from builtins import object
 from codequick import utils
 import urlquick
 import pytz
@@ -37,13 +45,15 @@ import re
 try:
     import urllib.parse as urllib
 except ImportError:
-    import urllib
+    import urllib.request
+    import urllib.parse
+    import urllib.error
 import datetime
 import time
 from tzlocal import get_localzone
 
 
-class TeleramaXMLTVGrabber:
+class TeleramaXMLTVGrabber(object):
     """Implements grabbing and processing functionalities required to generate XMLTV data from
     Télérama mobile API.
     """
@@ -144,7 +154,7 @@ class TeleramaXMLTVGrabber:
     }
 
     def __init__(self):
-        self.CHANNELS_ID = {v: k for k, v in self.ID_CHANNELS.items()}
+        self.CHANNELS_ID = {v: k for k, v in list(self.ID_CHANNELS.items())}
 
     def _fix_xml_unicode_string(self, text):
         """Replace in a string all Windows-1252 specific chars to UTF-8 and delete non
@@ -284,7 +294,7 @@ class TeleramaXMLTVGrabber:
         updated_query = dict(query)
         updated_query['appareil'] = self._API_DEVICE
         signing_string = procedure + ''.join(
-            sorted([k + str(v) for k, v in updated_query.items()]))
+            sorted([k + str(v) for k, v in list(updated_query.items())]))
         signature = hmac.new(self._API_SECRET.encode(),
                              signing_string.encode(),
                              hashlib.sha1).hexdigest()
@@ -292,7 +302,7 @@ class TeleramaXMLTVGrabber:
         updated_query['api_cle'] = self._API_KEY
 
         url = '{}{}?{}'.format(self._API_URL, procedure,
-                               urllib.urlencode(updated_query))
+                               urllib.parse.urlencode(updated_query))
 
         # print('Retrieving URL %s', url)
         return urlquick.get(url,

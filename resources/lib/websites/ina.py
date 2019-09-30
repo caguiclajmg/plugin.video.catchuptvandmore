@@ -19,7 +19,13 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils
 
 from resources.lib import download
@@ -64,7 +70,7 @@ CATEGORIES = {'Toutes les Emissions': 'classic', 'Toutes les séries': 'serie'}
 
 def root(plugin, item_id, **kwargs):
     """Add modes in the listing"""
-    for category_name, category_mode in CATEGORIES.items():
+    for category_name, category_mode in list(CATEGORIES.items()):
         item = Listitem()
 
         item.label = category_name

@@ -24,7 +24,13 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -36,7 +42,9 @@ import urlquick
 try:
     import urllib.parse as urllib
 except ImportError:
-    import urllib
+    import urllib.request
+    import urllib.parse
+    import urllib.error
 
 # TO DO
 # Add Replay
@@ -54,5 +62,5 @@ def live_entry(plugin, item_id, item_dict, **kwargs):
 def get_live_url(plugin, item_id, video_id, item_dict, **kwargs):
 
     resp = urlquick.get(URL_LIVE, max_age=-1)
-    return urllib.unquote_plus(
+    return urllib.parse.unquote_plus(
         re.compile(r'sourceURL\"\:\"(.*?)\"').findall(resp.text)[0])

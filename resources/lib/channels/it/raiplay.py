@@ -24,7 +24,13 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -67,7 +73,7 @@ def list_letters(plugin, item_id, **kwargs):
     resp = urlquick.get(URL_REPLAYS)
     json_parser = json.loads(resp.text)
 
-    for letter_title in json_parser.keys():
+    for letter_title in list(json_parser.keys()):
         item = Listitem()
         item.label = letter_title
         item.set_callback(list_programs,

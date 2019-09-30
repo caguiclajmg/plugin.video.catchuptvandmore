@@ -20,7 +20,15 @@
     with Catch-up TV & More; if not, write to the Free Software Foundation,
     Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 import os
 import xbmc
 import xbmcgui
@@ -183,7 +191,7 @@ def select_ovpn():
 
         configs = []
         ovpnfileslist = []
-        for name, configfilepath in ovpnfiles.items():
+        for name, configfilepath in list(ovpnfiles.items()):
             configs.append(name)
             ovpnfileslist.append(configfilepath)
 
@@ -221,7 +229,7 @@ def delete_ovpn(*args, **kwargs):
 
         configs = []
         ovpnfileslist = []
-        for name, configfilepath in ovpnfiles.items():
+        for name, configfilepath in list(ovpnfiles.items()):
             configs.append(name)
             ovpnfileslist.append(configfilepath)
 
@@ -231,7 +239,7 @@ def delete_ovpn(*args, **kwargs):
         if idx >= 0:
             Script.log('Select: [%s]' % ovpnfileslist[idx])
             new_ovpnfiles = {}
-            for name, configfilepath in ovpnfiles.items():
+            for name, configfilepath in list(ovpnfiles.items()):
                 if configfilepath != ovpnfileslist[idx]:
                     new_ovpnfiles[name] = configfilepath
             with storage.PersistentDict('vpn') as db:

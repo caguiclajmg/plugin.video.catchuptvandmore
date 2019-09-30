@@ -1,3 +1,7 @@
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
 # /*
 # *
 # * OpenVPN for Kodi.
@@ -19,13 +23,17 @@
 # *
 # */
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
+from builtins import object
 import os
 import subprocess
 import time
 import socket
 
 
-class OpenVPNManagementInterface:
+class OpenVPNManagementInterface(object):
     def __init__(self, ip, port, openvpn=None):
         self.openvpn = openvpn
         self.ip = ip
@@ -117,7 +125,7 @@ class OpenVPNError(Exception):
         return '[%d]: %s' % (self.errno, self.string)
 
 
-class OpenVPN:
+class OpenVPN(object):
     def __init__(self,
                  openvpn,
                  ovpnconfig,

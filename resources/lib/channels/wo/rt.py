@@ -24,7 +24,14 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -79,7 +86,7 @@ def list_categories(plugin, item_id, **kwargs):
     - ...
     """
     CATEGORIES_VIDEOS = eval('CATEGORIES_VIDEOS_%s' % DESIRED_LANGUAGE)
-    for category_url, category_title in CATEGORIES_VIDEOS.items():
+    for category_url, category_title in list(CATEGORIES_VIDEOS.items()):
         if 'magazines' in category_url or 'shows' in category_url:
             item = Listitem()
             item.label = category_title

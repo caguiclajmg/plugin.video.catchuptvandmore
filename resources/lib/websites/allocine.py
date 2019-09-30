@@ -20,7 +20,13 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 import json
 import re
 import requests
@@ -72,7 +78,7 @@ CATEGORIES_LANGUAGE = {'VF': 'version-0/', 'VO': 'version-1/'}
 
 def root(plugin, item_id, **kwargs):
     """Add modes in the listing"""
-    for category_name, category_url in CATEGORIES.items():
+    for category_name, category_url in list(CATEGORIES.items()):
 
         if 'series' in category_url or 'films' in category_url:
             next_value = 'list_shows_films_series_1'
@@ -297,7 +303,7 @@ def list_shows_films_series_2(plugin, item_id, show_url, **kwargs):
     item_post_treatment(item)
     yield item
 
-    for language, language_url in CATEGORIES_LANGUAGE.items():
+    for language, language_url in list(CATEGORIES_LANGUAGE.items()):
         item = Listitem()
         item.label = language
         item.set_callback(list_videos_films_series_1,

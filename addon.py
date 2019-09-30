@@ -24,8 +24,15 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
 # Core imports
+from future import standard_library
+standard_library.install_aliases()
+from builtins import range
+from builtins import *
 import importlib
 import sys
 
@@ -73,7 +80,7 @@ def get_sorted_menu(plugin, menu_id):
     # according to each item order and we have
     # to hide each disabled item
     menu = []
-    for item_id, item_infos in current_menu.items():
+    for item_id, item_infos in list(current_menu.items()):
 
         add_item = True
 
@@ -430,7 +437,7 @@ def favourites(plugin, start=0, **kwargs):
     sorted_menu = []
     with storage.PersistentDict("favourites.pickle") as db:
         menu = []
-        for item_hash, item_dict in db.items():
+        for item_hash, item_dict in list(db.items()):
             item = (item_dict['params']['order'], item_hash, item_dict)
 
             menu.append(item)

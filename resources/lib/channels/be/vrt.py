@@ -24,7 +24,13 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -94,7 +100,7 @@ def list_root(plugin, item_id, **kwargs):
     - Informations
     - ...
     """
-    for root_part_url, root_title in ROOT_VRT.items():
+    for root_part_url, root_title in list(ROOT_VRT.items()):
         root_url = URL_ROOT + root_part_url
 
         if 'categorieen' in root_part_url:
@@ -277,7 +283,7 @@ def get_video_url(plugin,
     resp3 = session_requests.get(video_id_datas_url)
     json_parser2 = json.loads(resp3.text)
     video_id = ''
-    for video_id_datas in json_parser2.items():
+    for video_id_datas in list(json_parser2.items()):
         video_id = json_parser2[video_id_datas[0]]['videoid']
     # Stream Url
     resp4 = session_requests.get(URL_STREAM_JSON % video_id)

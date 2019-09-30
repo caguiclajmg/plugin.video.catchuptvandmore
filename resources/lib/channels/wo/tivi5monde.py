@@ -24,7 +24,14 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -69,8 +76,8 @@ def list_categories(plugin, item_id, **kwargs):
     - Informations
     - ...
     """
-    for category_context, category_title in CATEGORIES_VIDEOS_TIVI5MONDE.items(
-    ):
+    for category_context, category_title in list(CATEGORIES_VIDEOS_TIVI5MONDE.items(
+    )):
         category_url = URL_TIVI5MONDE_ROOT + category_context
         if 'REPLAY' in category_title:
             next_value = 'list_programs'
@@ -209,7 +216,7 @@ def live_entry(plugin, item_id, item_dict, **kwargs):
 def get_live_url(plugin, item_id, video_id, item_dict, **kwargs):
 
     live_id = ''
-    for channel_name, live_id_value in LIST_LIVE_TV5MONDE.items():
+    for channel_name, live_id_value in list(LIST_LIVE_TV5MONDE.items()):
         if item_id == channel_name:
             live_id = live_id_value
     resp = urlquick.get(URL_TV5MONDE_LIVE + '%s.html' % live_id,

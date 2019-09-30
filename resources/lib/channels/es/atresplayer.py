@@ -24,7 +24,14 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -233,7 +240,7 @@ def get_video_url(plugin,
     response = xbmc.executeJSONRPC(json.dumps(payload))
     responses_uni = text_type(response, 'utf-8', errors='ignore')
     response_serialized = json.loads(responses_uni)
-    if 'error' not in response_serialized.keys():
+    if 'error' not in list(response_serialized.keys()):
         result = response_serialized.get('result', {})
         addon = result.get('addon', {})
         if addon.get('enabled', False) is True:

@@ -5,9 +5,16 @@ SimplePlugin micro-framework for Kodi content plugins
 **Author**: Roman Miroshnychenko aka Roman V.M.
 **License**: `GPL v.3 <https://www.gnu.org/copyleft/gpl.html>`_
 """
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import unicode_literals
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 try:
-    import cPickle as pickle
+    import pickle as pickle
 except ImportError:
     import pickle
 from collections import MutableMapping
@@ -64,7 +71,7 @@ class MemStorage(MutableMapping):
         :rtype: str
         """
         lines = []
-        for key, val in self.items():
+        for key, val in list(self.items()):
             lines.append('{0}: {1}'.format(repr(key), repr(val)))
         return ', '.join(lines)
 

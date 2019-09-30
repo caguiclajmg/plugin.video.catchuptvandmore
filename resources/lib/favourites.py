@@ -24,7 +24,15 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
+from builtins import *
 import xbmc
 import xbmcgui
 
@@ -158,7 +166,7 @@ def remove_favourite_item(plugin, item_hash):
         # We need to fix the order param
         # in order to not break the move up/down action
         menu = []
-        for item_hash, item_dict in db.items():
+        for item_hash, item_dict in list(db.items()):
             item = (item_dict['params']['order'], item_hash)
 
             menu.append(item)
@@ -189,7 +197,7 @@ def move_favourite_item(plugin, direction, item_hash):
         item_to_move_order = db[item_hash]['params']['order']
 
         menu = []
-        for item_hash, item_dict in db.items():
+        for item_hash, item_dict in list(db.items()):
             item = (item_dict['params']['order'], item_hash, item_dict)
 
             menu.append(item)

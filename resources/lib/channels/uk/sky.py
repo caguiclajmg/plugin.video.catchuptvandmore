@@ -24,7 +24,14 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script, youtube
 
 from resources.lib.labels import LABELS
@@ -40,7 +47,9 @@ import re
 try:
     import urllib.parse as urllib
 except ImportError:
-    import urllib
+    import urllib.request
+    import urllib.parse
+    import urllib.error
 import urlquick
 
 # TO DO
@@ -182,7 +191,7 @@ def get_video_url(plugin,
     data_embed_token = urlquick.get(URL_PCODE_EMBED_TOKEN).text
     pcode = re.compile('sas/embed_token/(.*?)/all').findall(
         data_embed_token)[0]
-    data_embed_token = urllib.quote_plus(data_embed_token.replace('"', ''))
+    data_embed_token = urllib.parse.quote_plus(data_embed_token.replace('"', ''))
     video_vod = urlquick.get(URL_OOYALA_VOD %
                              (pcode, video_id, data_embed_token)).text
     json_parser = json.loads(video_vod)

@@ -24,7 +24,14 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -104,7 +111,7 @@ def list_categories(plugin, item_id, **kwargs):
     - Les feux de l'amour
     - ...
     """
-    for category_title, program_url in CATEGORIES.items():
+    for category_title, program_url in list(CATEGORIES.items()):
         item = Listitem()
         item.label = category_title
         item.set_callback(list_programs,

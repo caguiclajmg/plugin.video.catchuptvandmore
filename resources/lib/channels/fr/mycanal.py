@@ -24,7 +24,13 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -45,7 +51,9 @@ import requests
 try:
     import urllib.parse as urllib
 except ImportError:
-    import urllib
+    import urllib.request
+    import urllib.parse
+    import urllib.error
 
 # TO DO
 # Wait Kodi 18 to use live with DRM
@@ -677,7 +685,7 @@ def get_video_url(plugin,
                         'mycanal',
                     }
                     # Return HTTP 200 but the response is not correctly interpreted by inputstream (https://github.com/peak3d/inputstream.adaptive/issues/267)
-                    item.property['inputstream.adaptive.license_key'] = jsonparser_stream_datas['@licence'] + '?drmType=DRM%20Widevine' + '|%s|b{SSM}|' % urllib.urlencode(headers2)
+                    item.property['inputstream.adaptive.license_key'] = jsonparser_stream_datas['@licence'] + '?drmType=DRM%20Widevine' + '|%s|b{SSM}|' % urllib.parse.urlencode(headers2)
                     return item
 
     stream_url = ''

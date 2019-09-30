@@ -25,7 +25,15 @@
 # an effect on Python 2.
 # It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
+from __future__ import print_function
+from __future__ import division
+from __future__ import absolute_import
 
+from future import standard_library
+standard_library.install_aliases()
+from builtins import str
+from builtins import range
+from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script
 
 from resources.lib.labels import LABELS
@@ -98,7 +106,7 @@ def list_categories(plugin, item_id, **kwargs):
     resp = urlquick.get(URL_API, params=params, headers=headers)
     json_parser = json.loads(resp.text)
 
-    for json_key in json_parser['data'].keys():
+    for json_key in list(json_parser['data'].keys()):
         if json_parser['data'][json_key]['label']:
             category_name = json_parser['data'][json_key]['label']
             category_id = json_parser['data'][json_key]['id']
@@ -164,7 +172,7 @@ def list_program_categories(plugin, item_id, program_slug, **kwargs):
     - Saison 1
     - ...
     """
-    for video_type_title, video_type_value in VIDEO_TYPES.items():
+    for video_type_title, video_type_value in list(VIDEO_TYPES.items()):
         item = Listitem()
         item.label = video_type_title
         item.set_callback(list_videos,
