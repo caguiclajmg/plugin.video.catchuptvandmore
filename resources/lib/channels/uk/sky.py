@@ -28,8 +28,8 @@ from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
 
-from future import standard_library
-standard_library.install_aliases()
+from resources.lib.hack_future import install_aliases
+install_aliases()
 from builtins import str
 from builtins import *
 from codequick import Route, Resolver, Listitem, utils, Script, youtube
@@ -43,13 +43,6 @@ from resources.lib.listitem_utils import item_post_treatment, item2dict
 import base64
 import json
 import re
-# Working for Python 2/3
-try:
-    import urllib.parse as urllib
-except ImportError:
-    import urllib.request
-    import urllib.parse
-    import urllib.error
 import urlquick
 
 # TO DO

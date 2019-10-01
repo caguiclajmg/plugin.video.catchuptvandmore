@@ -30,8 +30,8 @@ from __future__ import absolute_import
 
 # Source: https://github.com/melmorabity/tv_grab_fr_telerama
 
-from future import standard_library
-standard_library.install_aliases()
+from resources.lib.hack_future import install_aliases
+install_aliases()
 from builtins import str
 from builtins import *
 from builtins import object
@@ -41,13 +41,6 @@ import pytz
 import hashlib
 import hmac
 import re
-# Working for Python 2/3
-try:
-    import urllib.parse as urllib
-except ImportError:
-    import urllib.request
-    import urllib.parse
-    import urllib.error
 import datetime
 import time
 from tzlocal import get_localzone

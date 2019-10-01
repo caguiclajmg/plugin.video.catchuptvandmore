@@ -29,9 +29,8 @@ from __future__ import division
 from __future__ import absolute_import
 
 # Core imports
-from future import standard_library
-standard_library.install_aliases()
-from builtins import range
+from resources.lib.hack_future import install_aliases
+install_aliases()
 from builtins import *
 import importlib
 import sys

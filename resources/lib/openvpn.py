@@ -23,8 +23,8 @@ from __future__ import unicode_literals
 # *
 # */
 
-from future import standard_library
-standard_library.install_aliases()
+from resources.lib.hack_future import install_aliases
+install_aliases()
 from builtins import *
 from builtins import object
 import os

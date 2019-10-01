@@ -27,19 +27,13 @@ from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-from future import standard_library
-standard_library.install_aliases()
+from resources.lib.hack_future import install_aliases
+install_aliases()
 from builtins import *
 import importlib
 import xbmcgui
 import xbmc
 import sys
-
-try:
-    import urllib.parse as urlparse
-except ImportError:
-    # noinspection PyUnresolvedReferences
-    import urllib.parse
 
 from codequick import Script
 from resources.lib.labels import LABELS

@@ -28,22 +28,19 @@ from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
 from __future__ import absolute_import
-from future import standard_library
-standard_library.install_aliases()
+import sys
+sys.path.append('../..')
+from resources.lib.hack_future import install_aliases
+install_aliases()
 from builtins import str
 from builtins import *
 import polib
-import sys
-sys.path.append('..')
 
 import mock_codequick
-import urllib.request
-import urllib.parse
-import urllib.error
 import importlib
 import os
 
-from lib.labels import LABELS
+from resources.lib.labels import LABELS
 
 LIVE_TV_M3U_ALL_FILEPATH = "../m3u/live_tv_all.m3u"
 
@@ -154,7 +151,7 @@ def generate_m3u_files():
     m3u_entries = {}
 
     # Iterate over countries
-    live_tv = importlib.import_module('lib.skeletons.live_tv').menu
+    live_tv = importlib.import_module('resources.lib.skeletons.live_tv').menu
     for country_id, country_infos in list(live_tv.items()):
 
         country_label = get_label(country_id)
@@ -170,7 +167,7 @@ def generate_m3u_files():
             m3u_entries[country_id]['channels'] = []
 
         # Iterate over channels
-        country_channels = importlib.import_module('lib.skeletons.' +
+        country_channels = importlib.import_module('resources.lib.skeletons.' +
                                                    country_id).menu
         for channel_id, channel_infos in list(country_channels.items()):
 
@@ -262,7 +259,7 @@ def generate_m3u_files():
                     (channel_order, channel_m3u_dict))
 
         # Add WO channels if needed (e.g. Arte FR in the French M3U)
-        wo_live = importlib.import_module('lib.skeletons.wo_live').menu
+        wo_live = importlib.import_module('resources.lib.skeletons.wo_live').menu
         for channel_wo_id, channel_wo_infos in list(wo_live.items()):
             channel_can_be_added = False
             if 'available_languages' in channel_wo_infos:

@@ -26,8 +26,8 @@ from __future__ import unicode_literals
 
 # Inspired by https://gitlab.com/ronie/script.kodi.loguploader/blob/master/default.py
 
-from future import standard_library
-standard_library.install_aliases()
+from resources.lib.hack_future import install_aliases
+install_aliases()
 from builtins import str
 from builtins import *
 import os
