@@ -507,6 +507,23 @@ def error_handler(exception):
     """
     params = cqu.get_params_in_query(sys.argv[2])
 
+    # If it's an HTTPError
+    if isinstance(exception, urlquick.HTTPError):
+        code = exception.code
+        msg = exception.msg
+        hdrs = exception.hdrs
+        url = exception.filename
+        Script.log('urlquick.get() failed with HTTPError code {} with message "{}"'.format(code, msg, lvl=Script.ERROR))
+        if code == 500:
+            error_message = "Erreur 500 : Contenu indisponible"
+        elif code == 403:
+            error_message = "Erreur 403 : Contenu inaccessible"
+        elif code == 404:
+            error_message = "Erreur 404 : Contenu absent", ''
+        xbmcgui.Dialog().ok(
+            Script.localize(LABELS['Information']), error_message)
+        return
+
     # If we come from fav menu we
     # suggest user to delete this item
     if 'from_fav' in params:
