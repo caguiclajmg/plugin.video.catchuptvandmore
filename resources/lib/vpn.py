@@ -30,8 +30,8 @@ install_aliases()
 from builtins import str
 from builtins import *
 import os
-import xbmc
-import xbmcgui
+from kodi_six import xbmc
+from kodi_six import xbmcgui
 from resources.lib import openvpn as vpnlib
 from resources.lib.labels import LABELS
 from codequick import Route, utils, Script, storage

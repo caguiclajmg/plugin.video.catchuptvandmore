@@ -33,9 +33,9 @@ from builtins import *
 import os
 import re
 
-import xbmc
-import xbmcvfs
-import xbmcgui
+from kodi_six import xbmc
+from kodi_six import xbmcvfs
+from kodi_six import xbmcgui
 import pyqrcode
 
 from codequick import Script

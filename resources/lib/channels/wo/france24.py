@@ -21,9 +21,6 @@
     Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-# The unicode_literals import only has
-# an effect on Python 2.
-# It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division

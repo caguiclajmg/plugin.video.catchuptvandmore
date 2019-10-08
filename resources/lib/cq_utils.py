@@ -20,9 +20,6 @@
     Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
-# The unicode_literals import only has
-# an effect on Python 2.
-# It makes string literals as unicode like in Python 3
 from __future__ import unicode_literals
 from __future__ import print_function
 from __future__ import division
@@ -31,8 +28,8 @@ from resources.lib.hack_future import install_aliases
 install_aliases()
 from builtins import *
 import importlib
-import xbmcgui
-import xbmc
+from kodi_six import xbmcgui
+from kodi_six import xbmc
 import sys
 
 from codequick import Script
