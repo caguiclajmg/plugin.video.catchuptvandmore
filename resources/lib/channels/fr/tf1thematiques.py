@@ -80,7 +80,8 @@ def list_categories(plugin, item_id, **kwargs):
 @Route.register
 def list_videos(plugin, item_id, page, **kwargs):
 
-    if item_id == 'tvbreizh':
+    resp = urlquick.get(URL_VIDEOS % item_id)
+    if item_id == 'tvbreizh' or item_id == 'histoire':
         resp = urlquick.get(URL_VIDEOS % item_id)
     else:
         resp = urlquick.get(URL_VIDEOS % item_id + '?page=%s' % page)
@@ -110,7 +111,7 @@ def list_videos(plugin, item_id, page, **kwargs):
         item_post_treatment(item, is_playable=True, is_downloadable=True)
         yield item
 
-    if 'tvbreizh' not in item_id:
+    if 'tvbreizh' not in item_id and 'histoire' not in item_id:
         yield Listitem.next_page(item_id=item_id, page=str(int(page) + 1))
 
 
@@ -123,25 +124,25 @@ def get_video_url(plugin,
                   **kwargs):
 
     resp = urlquick.get(video_url,
-                        headers={'User-Agent': web_utils.get_random_ua},
+                        headers={'User-Agent': web_utils.get_random_ua()},
                         max_age=-1)
     video_id = re.compile(r'www.wat.tv/embedframe/(.*?)[\"\?]').findall(
         resp.text)[0]
     url_wat_embed = URL_WAT_BY_ID % video_id
     wat_embed_html = urlquick.get(
         url_wat_embed,
-        headers={'User-Agent': web_utils.get_random_ua},
+        headers={'User-Agent': web_utils.get_random_ua()},
         max_age=-1)
     stream_id = re.compile('UVID=(.*?)&').findall(wat_embed_html.text)[0]
     url_json = URL_VIDEO_STREAM % stream_id
     htlm_json = urlquick.get(url_json,
-                             headers={'User-Agent': web_utils.get_random_ua},
+                             headers={'User-Agent': web_utils.get_random_ua()},
                              max_age=-1)
     json_parser = json.loads(htlm_json.text)
 
     # Check DRM in the m3u8 file
     manifest = urlquick.get(json_parser["hls"],
-                            headers={'User-Agent': web_utils.get_random_ua},
+                            headers={'User-Agent': web_utils.get_random_ua()},
                             max_age=-1)
     if 'drm' in manifest:
         Script.notify("TEST", plugin.localize(LABELS['drm_notification']),
@@ -151,7 +152,7 @@ def get_video_url(plugin,
     root = os.path.dirname(json_parser["hls"])
 
     manifest = urlquick.get(json_parser["hls"].split('&max_bitrate=')[0],
-                            headers={'User-Agent': web_utils.get_random_ua},
+                            headers={'User-Agent': web_utils.get_random_ua()},
                             max_age=-1)
 
     lines = manifest.text.splitlines()
@@ -161,7 +162,7 @@ def get_video_url(plugin,
     for k in range(0, len(lines) - 1):
         if 'RESOLUTION=' in lines[k]:
             all_datas_videos_quality.append(
-                re.compile(r'RESOLUTION=(.*?),').findall(lines[k])[0])
+                re.compile(r'RESOLUTION=(.*?)$').findall(lines[k])[0].split(',')[0])
             all_datas_videos_path.append(root + '/' + lines[k + 1])
     if DESIRED_QUALITY == "DIALOG":
         seleted_item = xbmcgui.Dialog().select(
